@@ -1,14 +1,18 @@
 <?php
 namespace PHPMongoGraph;
 class Graph{
-	public $_client;
+	public static $_client;
 	
 	public function __construct($dsn, $db){
-		$this->_client = new MClient($dsn, $db);
+		$this->_client = MClient::getInstance($dsn, $db);
 	}
 	
-	public function makeNode($id){
-		return new Node($id);
+	public function makeNode($refid){
+		return new Node($refid);
+	}
+	
+	public function getNode($refid){
+		return Node::getNode($refid);
 	}
 }
 ?>

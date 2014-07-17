@@ -5,6 +5,6 @@ use PHPMongoGraph\Graph;
 
 $graph = new Graph('mongodb://127.0.0.1', 'graph');
 
-$graph->makeNode(12312)->save();
+print_r($graph->getNode(12312));
 
 ?>
