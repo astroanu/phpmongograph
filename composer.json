@@ -1,0 +1,22 @@
+{
+    "name": "astroanu/phpmongograph",
+    "type": "library",
+    "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+    "keywords": ["framework", "http", "rest", "web service", "curl", "client", "HTTP client"],
+    "homepage": "http://guzzlephp.org/",
+    "license": "MIT",
+
+    "authors": [{
+        "name": "Michael Dowling",
+        "email": "mtdowling@gmail.com",
+        "homepage": "https://github.com/mtdowling"
+    }],
+    "autoload": {
+        "psr-0": {
+            "PHPMongoGraph": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4.0"
+    }
+}
