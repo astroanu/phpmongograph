@@ -1,20 +1,26 @@
 <?php
 namespace PHPMongoGraph;
 
-Class Node{
+class Connection{
+	const DIRECTION_OUT = 'out';
+	const DIRECTION_IN = 'in';
+	
 	private $_data;
 	private $_mongoId;
 	
-	public function getConnections($types, $direction){
-		$d = ($direction == Connection::DIRECTION_IN) ? 'end' : 'start';
-		$q = array($d => $this->_mongoId, 'type' => array('$in' => $types));
-		$cur = MClient::getDb()->find(Graph::$_relscoll, $q, array('hash' => false));
-		
-		return new Relationships($this->getId(), $cur, $direction, $types);
+	public function setType($type){
+		$this->_data['type'] = $type;
+		return $this;
 	}
 	
-	public function getId(){
-		return $this->_mongoId;
+	public function setStartNode(Node $object){
+		$this->_data['start'] = $object->getId();
+		return $this;
+	}
+	
+	public function setEndNode(Node $object){
+		$this->_data['end'] = $object->getId();
+		return $this;
 	}
 	
 	public function getProperties(){
@@ -28,8 +34,8 @@ Class Node{
 	
 	public function save(){
 		return MClient::getDb()->update(
-				Graph::$_nodescoll,
-				array('_id' => $this->_mongoId),
+				Graph::$_relscoll,
+				array('hash' => md5($this->_data['start'] . $this->_data['end'] . $this->_data['type'])),
 				array('$set' => $this->_data),
 				array('upsert' => true)
 		);
@@ -46,18 +52,7 @@ Class Node{
 			$this->_mongoId = new \MongoId();
 			$this->_data = array();
 			$this->_data['props'] = array();
-		}		
-	}
-	
-	public static function getNode($id){
-		$doc = MClient::getDb()->findOne(
-				Graph::$_nodescoll,
-				array('_id' => new \MongoId($id))
-			);
-		if(is_array($doc)){
-			return new self($doc);
 		}
-		return null;
 	}
 }
 ?>

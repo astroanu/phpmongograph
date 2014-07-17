@@ -1,5 +1,6 @@
 <?php
 namespace PHPMongoGraph;
+
 class MClient{
 	private static $instance;
 	private static $_client;
@@ -38,15 +39,15 @@ class MClient{
 		return $result;
 	}
 	
-	public function find($collection, $where){
+	public function find($collection, $where, $return = array()){
 		$db = self::$_db;
-		$result = self::$_client->$db->$collection->find($where);
+		$result = self::$_client->$db->$collection->find($where, $return);
 		return $result;
 	}
 	
-	public function findOne($collection, $where){
+	public function findOne($collection, $where, $return = array()){
 		$db = self::$_db;
-		$result = self::$_client->$db->$collection->findOne($where);
+		$result = self::$_client->$db->$collection->findOne($where, $return);
 		return $result;
 	}
 }
