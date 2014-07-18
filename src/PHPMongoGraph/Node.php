@@ -17,6 +17,13 @@ Class Node{
 		return $this->_mongoId;
 	}
 	
+	public function getProperty($property){
+		if(isset($this->_data['props'][$property])){
+			return $this->_data['props'][$property];
+		}
+		return null;
+	}
+	
 	public function getProperties(){
 		return $this->_data['props'];
 	}
