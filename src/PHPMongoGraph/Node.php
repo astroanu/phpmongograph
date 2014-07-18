@@ -34,12 +34,13 @@ Class Node{
 	}
 	
 	public function save(){
-		return MClient::getDb()->update(
+		MClient::getDb()->update(
 				Graph::$_nodescoll,
 				array('_id' => $this->_mongoId),
 				array('$set' => $this->_data),
 				array('upsert' => true)
-		);
+		);		
+		return $this;
 	}
 	
 	public function __construct(){
