@@ -33,6 +33,7 @@ class Connection{
 	}
 	
 	public function save(){
+		$this->_data['uts'] = new \MongoDate(time());
 		return MClient::getDb()->update(
 				Graph::$_relscoll,
 				array('hash' => md5($this->_data['start'] . $this->_data['end'] . $this->_data['type'])),
@@ -50,7 +51,7 @@ class Connection{
 		}
 		else{
 			$this->_mongoId = new \MongoId();
-			$this->_data = array();
+			$this->_data = array('cts' => new \MongoDate(time()));
 			$this->_data['props'] = array();
 		}
 	}
