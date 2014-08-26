@@ -2,7 +2,6 @@
 namespace PHPMongoGraph;
 
 class Relationships{
-	private $_nodes = array();
 	private $_ids = array();
 	private $_direction;
 	private $_types;
@@ -10,12 +9,15 @@ class Relationships{
 	
 	public function __construct($subject, $cur, $direction, $types){
 		foreach ($cur as $n) {
-			array_push($this->_nodes, new Node($n));
-			if($direction == Connection::DIRECTION_IN){
-				array_push($this->_ids, $n['start']);
+			if(!isset($this->_ids[$n['type']])){
+				$this->_ids[$n['type']] = array();
 			}
-			else if($direction == Connection::DIRECTION_IN){
-				array_push($this->_ids, $n['end']);
+			
+			if($direction == Connection::DIRECTION_IN){
+				array_push($this->_ids[$n['type']], $n['start']);
+			}
+			else if($direction == Connection::DIRECTION_OUT){
+				array_push($this->_ids[$n['type']], $n['end']);
 			}
 		}
 		$this->_types = $types;
@@ -37,9 +39,5 @@ class Relationships{
 	
 	public function getIds(){
 		return $this->_ids;
-	}
-	
-	public function getNodes(){
-		return $this->_nodes;
 	}
 }
