@@ -19,6 +19,9 @@ class MClient{
     } 
     
     final public static function getDb(){
+    	if(is_null(self::$instance)){
+    		throw new \Exception(__METHOD__.' could not get instance');
+    	}
     	return self::$instance;
     }
     
@@ -26,11 +29,17 @@ class MClient{
     	self::$_client = new \MongoClient($dsn);
     	self::$_db = $db;
     }
+    
+    public function insert($collection, $data){
+    	$db = self::$_db;
+    	self::$_client->$db->$collection->insert($data);
+    	return $data;
+    }
 	
-	public function insert($collection, $data){
+	public function aggregate($collection, $aggregation){
 		$db = self::$_db;
-		self::$_client->$db->$collection->insert($data);	
-		return $data;
+		$result = self::$_client->$db->$collection->aggregate($aggregation);	
+		return $result;
 	}
 	
 	public function update($collection, $where, $update, $options){
