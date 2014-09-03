@@ -30,9 +30,4 @@ the above means ``$b`` likes ``$a``
 ####getting connections
     $connections = $a->getConnections(array('LIKES'), Connection::DIRECTION_IN);
     
-this will return nodes who like ``$a``. to get who ``$a`` likes use ``Connection::DIRECTION_OUT``
-
-####displaying
-
-    echo $connections->getCount().' people ' . implode(', ', $connections->getType()) . ' ' 
-    . Node::getNode($connections->getSubject())->getProperty('name');
+this will return connections sorted reverse chronologically
