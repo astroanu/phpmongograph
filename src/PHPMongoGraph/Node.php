@@ -82,7 +82,7 @@ Class Node{
 		if(is_array($doc)){
 			return new self($doc);
 		}
-		return null;
+		return new self();
 	}
 }
 ?>
