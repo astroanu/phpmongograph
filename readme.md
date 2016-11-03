@@ -1,3 +1,5 @@
+#### this project is not maintained anymore
+
 PHPMongoGraph
 =========
 
